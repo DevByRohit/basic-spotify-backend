@@ -1,6 +1,6 @@
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const bcript = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 // API to register a new user
 const registerUser = async (req, res) => {
@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
   }
 
   // Hash the password using bcrypt before storing it in the database
-  const hashedPassword = await bcript.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   // Create a new user in the database with the provided username, email, hashed password, and role
   const user = await userModel.create({
@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
   }
 
   // Compare the provided password with the stored hashed password
-  const isPasswordValid = await bcript.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
 
   // If the password is invalid, return an error
   if (!isPasswordValid) {
